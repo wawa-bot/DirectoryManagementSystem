@@ -1,5 +1,5 @@
 #include <iostream>
-#include <windows.h> // For Windows directory operations
+#include <windows.h>
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -9,7 +9,7 @@ using namespace std;
 int main() {
     string currentDir = "";
 
-    int choice;
+    char choice;
     do {
         cout << "Main Menu:\n";
         cout << "[1] List Files\n";
@@ -112,7 +112,7 @@ int main() {
                 break;
             }
             case 4:
-                cout << "Exiting the program.\n";
+                cout << "Exit the program.\n";
                 break;
             default:
                 cout << "Invalid choice. Please try again.\n";
@@ -121,4 +121,5 @@ int main() {
     
     return 0;
 }
+
 
