@@ -1,84 +1,58 @@
 #include <iostream>
 #include <windows.h>
 #include <string>
-#include <vector>
-#include <algorithm>
 
 using namespace std;
 
 int main() {
-    string currentDir = "";
-
+    char listChoice;
     char choice;
     do {
-        cout << "Main Menu:\n";
-        cout << "[1] List Files\n";
-        cout << "[2] Create Directory\n";
-        cout << "[3] Change Directory\n";
-        cout << "[4] Exit\n";
-        cout << "Enter your choice: ";
-        cin >> choice;
-
+            cout<< "Main Menu:\n";
+            cout<< "[1] List Files\n";
+            cout<< "[2] Create Directory\n";
+            cout<< "[3] Change DIrectory\n";
+            cout<< "[4] Exit\n";
+            cout<< "Enter your choice: ";
+            cin>> choice;
+        if (choice == '4') {
+                cout<<" Exiting the Program.\n";
+            break;   
+        }
         switch (choice) {
             case 1: {
-                int listChoice;
-                cout << "List Files Menu:\n";
-                cout << "[1] List All Files\n";
-                cout << "[2] List Files by Extension\n";
-                cout << "[3] List Files by Pattern\n";
-                cout << "Enter your choice: ";
-                cin >> listChoice;
-
-                string filter;
+                int  litChoice;
+                    cout<< "\nLIST Files Menu:\n";
+                    cout<< "\nList All Files:\n";
+                    cout<< "\nList Files by Expression:\n";
+                    cout<< "\nList Files by Patterns:\n";
+                    cout<< "Enter your choice:";
+                    cin>> listChoice;
                 WIN32_FIND_DATA findFileData;
-                HANDLE hFind;
-
-                switch (listChoice) {
-                    case 1:
+                HANDLE  hFind;
+                string filter;
+                switch(listChoice) {
+                    case 1: {
                         hFind = FindFirstFile("*.*", &findFileData);
-                        if (hFind != INVALID_HANDLE_VALUE) {
-                            cout << "Listing all files:\n";
+                        if(hfind != INLAVID_HANDLE_VALUE) {
+                            cout<<"\nAll Files\n";
                             do {
-                                if (!(findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
-                                    cout << findFileData.cFileName << "\n";
-                                }
-                            } while (FindNextFile(hFind, &findFileData));
-                            FindClose(hFind);
+                                if (!(findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECOTRY)) {
+                                        cout<< findFileData.cFileName << "\n";
+                                }                         
+                            } while (FindNextFile(hfind, &findFiesData));
+                                FindClose(hfind);
                         }
                         break;
-                    case 2:
-                        cout << "Enter the file extension (e.g., .txt): ";
-                        cin >> filter;
-                        hFind = FindFirstFile(("*" + filter).c_str(), &findFileData);
-                        if (hFind != INVALID_HANDLE_VALUE) {
-                            cout << "Listing files with extension " << filter << ":\n";
-                            do {
-                                if (!(findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
-                                    cout << findFileData.cFileName << "\n";
-                                }
-                            } while (FindNextFile(hFind, &findFileData));
-                            FindClose(hFind);
-                        }
-                        break;
-                    case 3:
-                        cout << "Enter the file pattern (e.g., moha*.*): ";
-                        cin >> filter;
-                        hFind = FindFirstFile(filter.c_str(), &findFileData);
-                        if (hFind != INVALID_HANDLE_VALUE) {
-                            cout << "Listing files matching pattern " << filter << ":\n";
-                            do {
-                                if (!(findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
-                                    cout << findFileData.cFileName << "\n";
-                                }
-                            } while (FindNextFile(hFind, &findFileData));
-                            FindClose(hFind);
-                        }
-                        break;
-                    default:
-                        cout << "Invalid choice.\n";
+                    }
+                    case 2:     {
+                            cout<<"Enter File Extension (e.g., .text): ";
+                        cin>>filter;
+                        
+                    }
                 }
-                break;
-            }
+                
+        
             case 2: {
                 string dirName;
                 cout << "Enter the name of the directory to create: ";
@@ -121,5 +95,6 @@ int main() {
     
     return 0;
 }
+
 
 
