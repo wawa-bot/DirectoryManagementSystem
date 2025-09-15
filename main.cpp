@@ -5,13 +5,13 @@
 using namespace std;
 
 int main() {
-    char listChoice;
+    string currentDir;
     char choice;
     do {
             cout<< "Main Menu:\n";
             cout<< "[1] List Files\n";
             cout<< "[2] Create Directory\n";
-            cout<< "[3] Change DIrectory\n";
+            cout<< "[3] Change Directory\n";
             cout<< "[4] Exit\n";
             cout<< "Enter your choice: ";
             cin>> choice;
@@ -20,40 +20,59 @@ int main() {
             break;   
         }
         switch (choice) {
-            case 1: {
-                int  litChoice;
+            case '1': {
+                char  listChoice;
                     cout<< "\nLIST Files Menu:\n";
-                    cout<< "\nList All Files:\n";
-                    cout<< "\nList Files by Expression:\n";
-                    cout<< "\nList Files by Patterns:\n";
+                    cout<< "[1]List All Files:\n";
+                    cout<< "[2]List Files by Expression:\n";
                     cout<< "Enter your choice:";
                     cin>> listChoice;
                 WIN32_FIND_DATA findFileData;
                 HANDLE  hFind;
                 string filter;
                 switch(listChoice) {
-                    case 1: {
+                    case '1': {
                         hFind = FindFirstFile("*.*", &findFileData);
-                        if(hfind != INLAVID_HANDLE_VALUE) {
+                        if(hFind != INVALID_HANDLE_VALUE) {
                             cout<<"\nAll Files\n";
                             do {
-                                if (!(findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECOTRY)) {
+                                if (!(findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
                                         cout<< findFileData.cFileName << "\n";
                                 }                         
-                            } while (FindNextFile(hfind, &findFiesData));
-                                FindClose(hfind);
+                            } while (FindNextFile(hFind, &findFileData));
+                                FindClose(hFind);
+                        } else {
+                            cout << "No files found.\n";
+                        }
+                        break;
+                  
+                    }
+                    case '2':     {
+                            cout<<"Enter File Extension (e.g., .text): ";
+                        cin>>filter;
+                        string searchPattern = "*" + filter; 
+
+                        hFind = FindFirstFile(searchPattern.c_str(), &findFileData);
+                        if (hFind != INVALID_HANDLE_VALUE) {
+                            cout << "\nFiles with " << filter << " extension:\n";
+                            do {
+                                if (!(findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
+                                    cout << findFileData.cFileName << "\n";
+                                }
+                            } while (FindNextFile(hFind, &findFileData));
+                            FindClose(hFind);
+                        } else {
+                            cout << "No files found with that extension.\n";
                         }
                         break;
                     }
-                    case 2:     {
-                            cout<<"Enter File Extension (e.g., .text): ";
-                        cin>>filter;
-                        
-                    }
+                    default:
+                        cout << "Invalid choice for list files menu.\n";
                 }
-                
-        
-            case 2: {
+                break;
+            }
+     
+            case '2': {
                 string dirName;
                 cout << "Enter the name of the directory to create: ";
                 cin >> dirName;
@@ -70,7 +89,7 @@ int main() {
                 }
                 break;
             }
-            case 3: {
+            case '3': {
                 string newDir;
                 cout << "Enter the path of the directory to change to: ";
                 cin >> newDir;
@@ -85,16 +104,17 @@ int main() {
                 }
                 break;
             }
-            case 4:
+            case '4':
                 cout << "Exit the program.\n";
                 break;
             default:
                 cout << "Invalid choice. Please try again.\n";
         }
-    } while (choice != 4);
+    } while (choice != '4');
     
     return 0;
 }
+
 
 
 
